@@ -25,7 +25,7 @@ export default function Sidebar() {
       <div className="flex justify-center">
       <hr className="w-[75%] border-gray-500"/>
       </div>
-      <ul className="mt-3 text-[#ECECEC] text-sm px-3 py-4">
+      <ul className="mt-3 text-[#ECECEC] text-sm px-3 py-3">
       {pdfNames.map((pdfName, index) => (
           <li
             key={index}

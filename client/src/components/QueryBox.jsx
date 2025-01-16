@@ -1,11 +1,12 @@
-import React from 'react';
-import { LuFilePlus2 } from 'react-icons/lu';
+import React, { useContext } from 'react';
+import { SidebarToggleContext } from '../context/SidebarToggleContext'
 import { FaFileCirclePlus } from "react-icons/fa6";
 
 export default function QueryBox() {
+  const { sidebarToggle, setSidebarToggle } = useContext(SidebarToggleContext);
   return (
     <div className='absolute -bottom-0 flex justify-center w-screen h-[22vh]'>
-      <div className='bg-[#2F2F2F] rounded-3xl w-[48vw] h-[18vh] pt-3 pl-3 justify-center items-center'>
+      <div className={`bg-[#2F2F2F] rounded-3xl w-[48vw] h-[18vh] pt-3 pl-3 justify-center items-center transition-all duration-300 ${sidebarToggle ? 'ml-64' : ''}`}>
         <label
           htmlFor='file-upload'
           className='flex flex-row gap-4 cursor-pointer text-white'
