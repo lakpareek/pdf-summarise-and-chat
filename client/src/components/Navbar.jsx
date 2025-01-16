@@ -14,7 +14,7 @@ const Navbar = () => {
 
   return (
     <nav
-      className={`bg-[#303030] flex justify-between transition-all duration-700 ml-0`}
+      className={`bg-[#303030] flex justify-between transition-all duration-700 ml-0 px-3 py-4`}
     >
       <MenuToggleBar/>
       
