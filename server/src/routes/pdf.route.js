@@ -1,11 +1,12 @@
 import express from "express";
-//import protectRoute from "../middleware/protectRoute.js";
+import protectRoute from "../middlewares/protectRoute.js";
+import upload from "../middlewares/multer.middleware.js";
 //import { getMessages, getUsersForSidebar, sendMessage } from "../controllers/message.controller.js";
-import { pdfToText, uploadPdf } from "../controllers/pdf.controller.js";
+import {  uploadPdf } from "../controllers/pdf.controller.js";
 const router = express.Router();
 
 
-router.post("/pdftotext", pdfToText);
-router.post("/uploadpdf", uploadPdf);
+
+router.post("/uploadpdf",protectRoute, upload.single("file"), uploadPdf);
 
 export default router;

@@ -8,12 +8,6 @@ const __dirname = dirname(__filename);
 
 dotenv.config({ path: join(__dirname, '../../.env') });
 
-console.log("Environment variables after loading:", {
-  PORT: process.env.PORT,
-  DB_PORT: process.env.DB_PORT,
-  envPath: join(__dirname, '../../.env') 
-});
-
 const { Pool } = pkg;
 
 const pool = new Pool({
@@ -36,12 +30,85 @@ const createUsersTable = async () => {
       );
     `);
     console.log("Users table is ready.");
-    console.log("Database Config:", pool.options);
   } catch (error) {
     console.error("Error creating users table:", error);
   }
 };
 
-createUsersTable();
+const createPdfsTable = async () => {
+  try {
+    await pool.query(`
+      CREATE TABLE IF NOT EXISTS pdfs (
+        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+        user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
+        cloudinary_url TEXT NOT NULL,
+        title VARCHAR(255),
+        summary TEXT,
+        uploaded_at TIMESTAMP DEFAULT NOW()
+      );
+    `);
+    console.log("PDFs table is ready.");
+  } catch (error) {
+    console.error("Error creating PDFs table:", error);
+  }
+};
+
+const createConversationsTable = async () => {
+  try {
+    await pool.query(`
+      CREATE TABLE IF NOT EXISTS conversations (
+        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+        user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
+        pdf_id UUID REFERENCES pdfs(id) ON DELETE CASCADE,
+        started_at TIMESTAMP DEFAULT NOW()
+      );
+    `);
+    console.log("Conversations table is ready.");
+  } catch (error) {
+    console.error("Error creating Conversations table:", error);
+  }
+};
+
+const createSenderEnum = async () => {
+  try {
+    await pool.query(`
+      DO $$ BEGIN
+        CREATE TYPE sender_enum AS ENUM ('user', 'ai');
+      EXCEPTION
+        WHEN duplicate_object THEN null;
+      END $$;
+    `);
+    console.log("ENUM sender_enum is ready.");
+  } catch (error) {
+    console.error("Error creating ENUM sender_enum:", error);
+  }
+};
+
+const createMessagesTable = async () => {
+  try {
+    await pool.query(`
+      CREATE TABLE IF NOT EXISTS messages (
+        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+        conversation_id UUID REFERENCES conversations(id) ON DELETE CASCADE,
+        sender sender_enum NOT NULL,
+        message TEXT NOT NULL,
+        sent_at TIMESTAMP DEFAULT NOW()
+      );
+    `);
+    console.log("Messages table is ready.");
+  } catch (error) {
+    console.error("Error creating Messages table:", error);
+  }
+};
+
+const initializeDB = async () => {
+  await createUsersTable();
+  await createPdfsTable();
+  await createConversationsTable();
+  await createSenderEnum();
+  await createMessagesTable();
+};
+
+initializeDB();
 
 export default pool;
