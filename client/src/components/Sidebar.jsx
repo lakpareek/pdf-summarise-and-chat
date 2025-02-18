@@ -14,11 +14,12 @@ import MenuToggleBar from "./MenuToggleBar";
 //DUMMY DATA STARTS
 const pdfNames = ["Notes.pdf", "All Things Encyclopediacvxvsvsvs-faefa aff.pdf", "Homo Ecce.pdf", "yes-to-life.pdf"]
 //DUMMY DATA ENDS
+const api_url = import.meta.env.VITE_API_URL;
 
 export default function Sidebar() {
   const { sidebarToggle, setSidebarToggle } = useContext(SidebarToggleContext);
   return (
-    <div className={`${sidebarToggle ? "translate-x-0" : "-translate-x-full"} transition-transform duration-300 ease-in-out w-64 bg-[#303030] fixed h-full `}>
+    <div className={`${sidebarToggle ? "translate-x-0" : "-translate-x-full"} transition-transform duration-300 ease-in-out sm:w-64 w-full z-40 bg-[#303030] fixed h-full `}>
       <div className="px-3 py-4">
       <MenuToggleBar/>
       </div>
