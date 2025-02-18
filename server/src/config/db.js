@@ -43,7 +43,6 @@ const createPdfsTable = async () => {
         user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
         cloudinary_url TEXT NOT NULL,
         title VARCHAR(255),
-        summary TEXT,
         uploaded_at TIMESTAMP DEFAULT NOW()
       );
     `);
@@ -60,6 +59,7 @@ const createConversationsTable = async () => {
         id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
         user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
         pdf_id UUID REFERENCES pdfs(id) ON DELETE CASCADE,
+        pdf_text TEXT NOT NULL,
         started_at TIMESTAMP DEFAULT NOW()
       );
     `);
@@ -73,7 +73,7 @@ const createSenderEnum = async () => {
   try {
     await pool.query(`
       DO $$ BEGIN
-        CREATE TYPE sender_enum AS ENUM ('user', 'ai');
+        CREATE TYPE sender_enum AS ENUM ('user', 'model');
       EXCEPTION
         WHEN duplicate_object THEN null;
       END $$;

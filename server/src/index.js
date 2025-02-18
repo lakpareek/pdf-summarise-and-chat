@@ -1,6 +1,7 @@
 import express from 'express';
 import pdfRoutes from './routes/pdf.route.js';
 import authRoutes from './routes/auth.route.js';
+import chatRoutes from './routes/chat.route.js';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
@@ -21,6 +22,7 @@ app.get('/', (req, res) => {
 
 app.use('/api/pdf', pdfRoutes);
 app.use('/api/auth', authRoutes);
+app.use('/api/chat', chatRoutes);
 
 app.listen(PORT, () => {
   console.log(`app listening on port ${PORT}`);

@@ -20,4 +20,33 @@ export const generateSummary = async (pdfContent) => {
     }
 };
 
+export const generateChatResponse = async (pdfText, conversationContext) => {
+    try {
+        const chatPrompt = `You are an AI assistant helping a user discuss the content of a PDF. Below is the extracted text from the PDF. 
+        The images are not included. Keep responses relevant to this text.
+
+        --- PDF Content ---
+        ${pdfText}
+        -------------------
+
+        Now, answer the user's questions based on this content.`;
+        console.log(conversationContext)
+        const result = await model.generateContent({
+            contents: [
+                { role: "user", parts: [{ text: chatPrompt }] }, 
+                ...conversationContext.map((message) => ({
+                    role: message.sender === 'user' ? 'user' : 'model',
+                    parts: [{ text: message.message }]
+                }))
+            ]
+        });
+
+        return result.response.text();
+    } catch (error) {
+        console.error("Error generating chat response:", error);
+        return "Chat generation failed.";
+    }
+};
+
+
 
