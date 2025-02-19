@@ -1,18 +1,43 @@
-import React from 'react'
-
+import React from "react";
+import { useState, useContext, useEffect } from "react";
+import { CurrentConversationContext } from "../context/CurrentConversationContext";
+import axios from 'axios';
 
 export default function Message() {
-  
+  const api_url = import.meta.env.VITE_API_URL;
+  const { currentConversation } = useContext(CurrentConversationContext);
+  const [messages, setMessages] = useState([]);
+
+  useEffect(() => {
+    const fetchMessages = async () => {
+      try {
+        const result = await axios.get(
+          `${api_url}/chat/${currentConversation.conversation_id}`, 
+          { withCredentials: true }
+        );
+        setMessages(result.data.messages);
+      } catch (error) {
+        console.error("Error fetching messages:", error);
+      }
+    };
+
+    if (currentConversation?.conversation_id) {
+      fetchMessages();
+      console.log("messages fetched")
+    }
+  }, [currentConversation]);
+
   return (
-    <div>
+    <div className="flex flex-col gap-5 p-4">
       
-    <div className='bg-[#303030] h-auto w-[40vw] rounded-r-3xl rounded-t-3xl p-3 mt-5'>
-      <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sit earum beatae debitis fugiat, ullam corporis necessitatibus, delectus dolorum, illum molestias inventore voluptatum id distinctio consequuntur sapiente? Possimus qui animi eum! Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur hic ut quidem quaerat nulla totam aperiam suscipit pariatur laborum aliquid. Neque delectus ea quod sint maiores possimus deleniti modi et? Lorem ipsum dolor sit amet, consectetur adipisicing elit. Hic impedit omnis, assumenda nobis reiciendis doloremque vel incidunt exercitationem quibusdam sit tempore, tenetur nemo eum quas corporis obcaecati nisi, excepturi debitis. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Excepturi ratione repellendus distinctio repudiandae, magni accusamus natus voluptates minima voluptatem itaque eius quaerat aut facilis consequatur, voluptatum possimus. Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sit earum beatae debitis fugiat, ullam corporis necessitatibus, delectus dolorum, illum molestias inventore voluptatum id distinctio consequuntur sapiente? Possimus qui animi eum! At, aliquam minus.</p>
+      {messages.map((message) => (
+        <div 
+          key={message.message_id} 
+          className={`w-[40vw] ${message.sender === "model" ? "rounded-r-3xl bg-zinc-800" : "rounded-l-3xl bg-neutral-200 text-zinc-800 ml-[8vw]"} rounded-t-3xl p-3`}
+        >
+          <p className="">{message.message}</p>
+        </div>
+      ))}
     </div>
-    <div className='bg-[#ebe3e3] text-[#363636] h-auto w-[40vw] rounded-l-3xl rounded-t-3xl p-3 mt-5 relative left-[8vw]'>
-      <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sit earum beatae debitis fugiat, ullam corporis necessitatibus, delectus dolorum, illum molestias inventore voluptatum id distinctio consequuntur sapiente? Possimus qui animi eum!</p>
-    </div>
-    </div>
-    
-  )
+  );
 }
