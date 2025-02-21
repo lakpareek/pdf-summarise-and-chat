@@ -1,6 +1,7 @@
 import pool from "../config/db.js";
 import { getConversations, getMessagesFromConvo, createMessage } from "../models/conversationsModel.js";
 import { generateChatResponse } from "../services/gemini.js";
+import { io } from "../socket/socket.js";
 
 export const getConvosForSidebar = async (req, res) => {
     try {
@@ -38,9 +39,12 @@ export const sendMessage = async (req, res) => {
     try {
         const extractedText = await pool.query(`SELECT pdf_text FROM conversations WHERE id = $1`, [req.params.conversation_id]);
         const message = await createMessage(req.params.conversation_id, "user", req.body.message);
+        io.to(req.params.conversation_id).emit("receiveMessage", {message: req.body.message, sender: "user"});
         const conversation = await getMessagesFromConvo(req.params.conversation_id);
         const aiResponse = await generateChatResponse(extractedText, conversation);
         await createMessage(req.params.conversation_id, 'model', aiResponse);
+
+        io.to(req.params.conversation_id).emit("receiveMessage", {message: aiResponse, sender: "model"});
         return res.status(200).json({
             success: true,
             message: aiResponse,

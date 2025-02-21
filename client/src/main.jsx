@@ -10,7 +10,7 @@ import { CurrentConversationProvider } from './context/CurrentConversationContex
 
 
 createRoot(document.getElementById('root')).render(
-  <StrictMode>
+  // <StrictMode>
     <BrowserRouter>
       <AuthProvider>
         <CurrentConversationProvider>
@@ -20,6 +20,5 @@ createRoot(document.getElementById('root')).render(
         </CurrentConversationProvider>
       </AuthProvider>
     </BrowserRouter>
-  </StrictMode>
+  // </StrictMode>
 )
-

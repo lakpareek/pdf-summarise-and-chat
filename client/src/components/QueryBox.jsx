@@ -4,6 +4,8 @@ import { CurrentConversationContext } from '../context/CurrentConversationContex
 import { FaFileCirclePlus } from "react-icons/fa6";
 import { IoSend } from "react-icons/io5";
 import axios from 'axios';
+import { socket } from '../socket';
+
 
 
 export default function QueryBox() {
@@ -12,20 +14,23 @@ export default function QueryBox() {
   const [message, setMessage] = useState("");
   const api_url = import.meta.env.VITE_API_URL;
 
+
   const isEmptyConversation = !currentConversation || Object.keys(currentConversation).length === 0;
 
   const handleSendMessage = async() => {
     if (message.trim() === "") return;
+    
+    const toSend = message;
+    setMessage("");
     try {
       const result = await axios.post(`${api_url}/chat/send/${currentConversation.conversation_id}`, {
-        message: message,
+        message: toSend,
       }, { withCredentials: true });
-      setMessage("");
-      console.log("Message Sent:", message);
+      
+      console.log("Message Sent:", toSend);
     } catch(error) {
       console.error("Error sending message:", error);
     }
-     // Clear input after sending
   };
   useEffect(() => {
     setMessage("");
@@ -35,13 +40,13 @@ export default function QueryBox() {
     <div className='absolute -bottom-0 flex justify-center w-screen h-[22vh]'>
       <div className={`bg-[#2F2F2F] rounded-3xl w-[48vw] h-[18vh] p-3 flex items-center transition-all duration-300 ${sidebarToggle ? 'ml-64' : ''}`}>
         {isEmptyConversation ? (
-          // Show File Upload if No Conversation Exists
+          // show File Upload if No Conversation Exists
           <label htmlFor='file-upload' className='flex flex-row gap-4 cursor-pointer text-white'>
             <FaFileCirclePlus size={40} />
             <span className='relative top-2'>Upload/Drag and Drop the PDF you need summarized</span>
           </label>
         ) : (
-          // Show Textbox when a Conversation Exists
+          // show Textbox when a Conversation Exists
           <div className="flex w-full h-full px-4 items-center">
             <textarea
               className="w-full h-full bg-transparent text-white  px-4 py-2 outline-none resize-none overflow-y-auto"
@@ -50,7 +55,7 @@ export default function QueryBox() {
               onChange={(e) => setMessage(e.target.value)}
               onKeyDown={(e) => {
                 if (e.key === 'Enter' && !e.shiftKey) {
-                  e.preventDefault(); // Prevent new line on Enter
+                  e.preventDefault(); 
                   handleSendMessage();
                 }
               }}
