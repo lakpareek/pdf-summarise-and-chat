@@ -21,21 +21,25 @@ export default function Message() {
         console.error("Error fetching messages:", error);
       }
     };
-
+  
     if (currentConversation?.conversation_id) {
       fetchMessages();
       socket.emit("joinConversation", currentConversation.conversation_id);
-      console.log("messages fetched")
+      console.log("messages fetched");
     }
-    socket.on("receiveMessage", (message) => {
+  
+    const handleReceiveMessage = (message) => {
       setMessages((prevMessages) => [...prevMessages, message]);
-      console.log (" received" + message.message);
-    });
-    
+      console.log("Received:", message.message);
+    };
+  
+    socket.on("receiveMessage", handleReceiveMessage);
+  
     return () => {
-      socket.off("receiveMessage");
+      socket.off("receiveMessage", handleReceiveMessage);
     };
   }, [currentConversation]);
+  
 
 
 
