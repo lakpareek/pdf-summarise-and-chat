@@ -6,6 +6,7 @@ import { generateSummary } from "../services/gemini.js";
 import {
   createConversation,
   createMessage,
+  getConversation
 } from "../models/conversationsModel.js";
 
 export const uploadPdf = async (req, res) => {
@@ -54,6 +55,7 @@ export const uploadPdf = async (req, res) => {
       return res.status(200).json({
         success: true,
         message: "File uploaded on cloud successfully",
+        pdf_id: pdf.id,
         localFile: {
           filename: req.file.filename,
           mimetype: req.file.mimetype,
@@ -80,3 +82,26 @@ export const uploadPdf = async (req, res) => {
     });
   }
 };
+
+export const getConversationById = async (req, res) => {
+  try {
+    const conversation = await getConversation(req.params.id);
+    if (!conversation) {
+      return res.status(404).json({
+        success: false,
+        message: "Conversation not found",
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      conversation,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: "Server error",
+      error: error.message,
+    });
+  }
+}

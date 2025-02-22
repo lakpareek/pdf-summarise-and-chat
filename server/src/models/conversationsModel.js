@@ -29,6 +29,21 @@ export const createMessage = async (conversation_id, sender, message) => {
     }
 }
 
+export const getConversation = async (pdf_id) => {
+    try {
+        const result = await pool.query(
+            `SELECT id FROM conversations WHERE pdf_id = $1 LIMIT 1;`,
+            [pdf_id]
+        );
+
+        return result.rows.length > 0 ? result.rows[0] : null;
+    } catch (error) {
+        console.error("Error fetching conversation:", error);
+        throw error;
+    }
+};
+
+
 export const getConversations = async (user_id) => {
     try {
         const result = await pool.query(`
