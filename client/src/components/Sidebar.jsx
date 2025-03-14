@@ -18,20 +18,21 @@ export default function Sidebar() {
           withCredentials: true,
         });
         setConversations(result.data.conversations);
+        console.log("Conversations fetched from sidebar:", result.data.conversations);
       } catch (error) {
         console.error("Error fetching conversations:", error);
       }
     };
     getConversations();
-  }, []);
+  }, [currentConversation]);
   useEffect(() => {
-    console.log(conversations);
+    console.log("Current Conversation updated:", currentConversation);
   }, [conversations]);
   return (
     <div
       className={`${
         sidebarToggle ? "translate-x-0" : "-translate-x-full"
-      } transition-transform duration-300 ease-in-out sm:w-64 w-full z-40 bg-[#303030] fixed h-full `}
+      } transition-transform duration-300 ease-in-out sm:w-64 w-full z-40 bg-[#303030] fixed h-full overflow-y-scroll`}
     >
       <div className="px-3 py-4">
         <MenuToggleBar />
@@ -45,7 +46,7 @@ export default function Sidebar() {
             key={conversation.conversation_id}
             onClick={() => setCurrentConversation(conversation)}
             className={`mb-2 rounded hover:shadow py-2 ${
-              currentConversation.conversation_id === conversation.conversation_id ? "bg-[#242020] hover:bg-[#242020]" : "hover:bg-[#3A3A3A]"
+              currentConversation && currentConversation.conversation_id === conversation.conversation_id ? "bg-[#242020] hover:bg-[#242020]" : "hover:bg-[#3A3A3A]"
             }`}
           >
             <a href="#" className="px-4 -ml-3" >

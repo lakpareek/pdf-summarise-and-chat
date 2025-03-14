@@ -1,6 +1,7 @@
 import React from "react";
 import { useState, useEffect, useContext } from "react";
 import { TbFileUpload } from "react-icons/tb";
+import { CurrentConversationContext } from '../context/CurrentConversationContext';
 import axios from "axios";
 
 
@@ -13,6 +14,7 @@ export default function FileUploader() {
     SUCCESS: Symbol('success'),
     ERROR: Symbol('error'),
   };
+  const { currentConversation, setCurrentConversation } = useContext(CurrentConversationContext);
   const [status, setStatus] = useState(UploadStatus.IDLE);
   function handleFileChange(e) {
     if (e.target.files) {
@@ -44,11 +46,26 @@ export default function FileUploader() {
             withCredentials: true
         })
         setStatus(UploadStatus.SUCCESS);
+        try{
+            const conversation = await axios.get(`${api_url}/chat/conversations`, {
+                withCredentials: true
+            })
+            console.log("Conversations fetched from fileuploader:", conversation.data.conversations);
+            const a = conversation.data.conversations[0];
+            setCurrentConversation(conversation.data.conversations[0]);
+            //console.log(JSON.stringify(a) === JSON.stringify(currentConversation));
+            console.log("Conversation set from fileUploader:", currentConversation);
+        }catch(error){
+            console.error("Error fetching conversation:", error);
+        }
+        setCurrentConversation()
     }catch(error){
         alert("There was an error uploading your file. Please try again :(");
         setStatus(UploadStatus.ERROR)
     }
   }
+
+  
   return (
     <div>
       <div className="flex  gap-3 sm:items-center h-full w-full flex-col-reverse sm:flex-row ">
