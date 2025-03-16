@@ -50,7 +50,7 @@ VITE_API_URL=http://localhost:3001/api
 
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/lakpareek/your-repo-name.git](https://github.com/lakpareek/pdf-summarise-and-chat.git
+https://github.com/lakpareek/pdf-summarise-and-chat.git
 ```
 
 ### 2. Install Backend Dependencies
