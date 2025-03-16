@@ -54,9 +54,9 @@ export default function Sidebar() {
       <ul className="mt-3 text-[#ECECEC] text-sm px-3 py-3">
         <li
           onClick={handleNewConversation}
-          className="mb-2 rounded hover:shadow py-2 hover:bg-[#3A3A3A] cursor-pointer"
+          className={`mb-2 rounded hover:shadow py-2 hover:bg-[#3A3A3A] cursor-pointer ${currentConversation ? "hover:bg-[#3A3A3A]" : "bg-[#242020] hover:bg-[#242020]"}`}
         >
-          <a href="#" className="px-4 -ml-3">
+          <a href="#" className={`px-4 -ml-3`}>
             ➕ New Conversation
           </a>
         </li>
