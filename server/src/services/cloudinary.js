@@ -30,20 +30,20 @@ const uploadOnCloudinary = async (localFilePath) => {
     }
 
     // Attempt upload
-    console.log("Attempting to upload file to Cloudinary:", localFilePath);
+    //("Attempting to upload file to Cloudinary:", localFilePath);
     const response = await cloudinary.uploader.upload(localFilePath, {
       resource_type: "auto",
       timeout: 60000 
     });
 
     // Log success
-    console.log("File uploaded successfully to Cloudinary");
-    console.log("Cloudinary URL:", response.url);
+    //console.log("File uploaded successfully to Cloudinary");
+    //console.log("Cloudinary URL:", response.url);
 
     // Clean up local file
     try {
       fs.unlinkSync(localFilePath);
-      console.log("Local file cleaned up successfully");
+      //console.log("Local file cleaned up successfully");
     } catch (unlinkError) {
       console.error("Error cleaning up local file:", unlinkError.message);
     }
@@ -59,7 +59,7 @@ const uploadOnCloudinary = async (localFilePath) => {
     try {
       if (fs.existsSync(localFilePath)) {
         fs.unlinkSync(localFilePath);
-        console.log("Local file cleaned up after error");
+        //console.log("Local file cleaned up after error");
       }
     } catch (unlinkError) {
       console.error("Error cleaning up local file:", unlinkError.message);

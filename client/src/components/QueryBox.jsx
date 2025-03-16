@@ -30,7 +30,7 @@ export default function QueryBox() {
         message: toSend,
       }, { withCredentials: true });
       
-      console.log("Message Sent:", toSend);
+      //("Message Sent:", toSend);
     } catch(error) {
       console.error("Error sending message:", error);
     }

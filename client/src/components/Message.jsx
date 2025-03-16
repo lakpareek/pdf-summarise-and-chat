@@ -3,11 +3,13 @@ import { useState, useContext, useEffect } from "react";
 import { CurrentConversationContext } from "../context/CurrentConversationContext";
 import axios from 'axios';
 import { socket } from "../socket";
+import useScrollBottom from "../hooks/useScrollBottom";
 
 export default function Message({conversationId}) {
   const api_url = import.meta.env.VITE_API_URL;
   //const { currentConversation } = useContext(CurrentConversationContext);
   const [messages, setMessages] = useState([]);
+  const bottomRef = useScrollBottom([messages]);
 
   useEffect(() => {
     const fetchMessages = async () => {
@@ -31,7 +33,7 @@ export default function Message({conversationId}) {
   
     const handleReceiveMessage = (message) => {
       setMessages((prevMessages) => [...prevMessages, message]);
-      console.log("Received:", message.message);
+      //console.log("Received:", message.message);
     };
   
     socket.on("receiveMessage", handleReceiveMessage);
@@ -55,6 +57,7 @@ export default function Message({conversationId}) {
           <p className="">{message.message}</p>
         </div>
       ))}
+      <div ref={bottomRef}></div>
     </div>
   );
 }

@@ -19,7 +19,7 @@ export default function Sidebar() {
           withCredentials: true,
         });
         setConversations(result.data.conversations);
-        console.log("Conversations fetched from sidebar:", result.data.conversations);
+        //console.log("Conversations fetched from sidebar:", result.data.conversations);
       } catch (error) {
         console.error("Error fetching conversations:", error);
       }

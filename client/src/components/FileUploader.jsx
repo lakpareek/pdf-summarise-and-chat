@@ -46,14 +46,14 @@ export default function FileUploader() {
     if(!file){
         return;
     }
-    console.log("Starting upload, setting status to UPLOADING");
+    //console.log("Starting upload, setting status to UPLOADING");
     setStatus(UploadStatus.UPLOADING);
     
     const formData = new FormData();
     formData.append("file", file);
     
     try{
-        console.log("Sending request to server");
+        //console.log("Sending request to server");
         const result = await axios.post(`${api_url}/pdf/uploadpdf`, formData, {
             headers: {
                 'Content-Type': 'multipart/form-data',
@@ -61,14 +61,14 @@ export default function FileUploader() {
             withCredentials: true
         });
         
-        console.log("Upload successful, setting status to SUCCESS");
+        //console.log("Upload successful, setting status to SUCCESS");
         setStatus(UploadStatus.SUCCESS);
         
         try{
             const conversation = await axios.get(`${api_url}/chat/conversations`, {
                 withCredentials: true
             });
-            console.log("Conversations fetched from fileuploader:", conversation.data.conversations);
+            //console.log("Conversations fetched from fileuploader:", conversation.data.conversations);
             setCurrentConversation(conversation.data.conversations[0]);
             const a = conversation.data.conversations[0].conversation_id;
             navigate(`/chat/${a}`);

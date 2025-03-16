@@ -30,7 +30,7 @@ export const generateChatResponse = async (pdfText, conversationContext) => {
         -------------------
 
         Now, answer the user's questions based on this content.`;
-        console.log(conversationContext)
+
         const result = await model.generateContent({
             contents: [
                 { role: "user", parts: [{ text: chatPrompt }] }, 

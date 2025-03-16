@@ -41,7 +41,7 @@ export const sendMessage = async (req, res) => {
         const message = await createMessage(req.params.conversation_id, "user", req.body.message);
         io.to(req.params.conversation_id).emit("receiveMessage", {message: req.body.message, sender: "user"});
         const conversation = await getMessagesFromConvo(req.params.conversation_id);
-        const aiResponse = await generateChatResponse(extractedText, conversation);
+        const aiResponse = await generateChatResponse(extractedText.rows[0].pdf_text, conversation);
         await createMessage(req.params.conversation_id, 'model', aiResponse);
 
         io.to(req.params.conversation_id).emit("receiveMessage", {message: aiResponse, sender: "model"});

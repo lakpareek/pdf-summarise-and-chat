@@ -24,8 +24,8 @@ const storage = multer.diskStorage({
 const upload = multer({
   storage: storage,
   fileFilter: (req, file, cb) => {
-    console.log("Multer receiving file:", file.originalname);
-    console.log("Mimetype:", file.mimetype);
+    //console.log("Multer receiving file:", file.originalname);
+    //console.log("Mimetype:", file.mimetype);
     cb(null, true);
   },
 });

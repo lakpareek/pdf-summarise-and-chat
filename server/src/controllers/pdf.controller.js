@@ -34,7 +34,7 @@ export const uploadPdf = async (req, res) => {
       });
     }
 
-    console.log(extractedText);
+    //console.log(extractedText);
     const summary = await generateSummary(extractedText);
     if (!summary || summary === "Summary generation failed.") {
       return res.status(500).json({
