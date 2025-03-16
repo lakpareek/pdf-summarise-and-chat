@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { SidebarToggleContext } from '../context/SidebarToggleContext';
 import { AuthContext } from "../context/AuthContext";
 import MenuToggleBar from "./MenuToggleBar";
+import useExternalClick from "../hooks/useExternalClick"; // Imported here
 
 const Navbar = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -11,22 +12,24 @@ const Navbar = () => {
   const { user, logout } = useContext(AuthContext); 
   const navigate = useNavigate(); 
 
-  const toggleDropdown = () => {
-    setDropdownOpen(!dropdownOpen);
-  };
-
   const log_out = async (e) => {
     e.preventDefault();
     await logout(); 
     navigate("/login"); 
   };
 
+  const handleDropdownClose = () => {
+    setDropdownOpen(false);
+  };
+
+  const dropdownRef = useExternalClick(handleDropdownClose);
+
   return (
     <nav className="bg-[#303030] flex justify-between transition-all duration-700 ml-0 px-3 py-3">
       <MenuToggleBar />
       <div className="flex items-center">
-        <div className="relative">
-          <button className="text-[#ECECEC] group bg-transparent" onClick={toggleDropdown}>
+        <div className="relative" ref={dropdownRef}>
+          <button className="text-[#ECECEC] group bg-transparent" onClick={() => setDropdownOpen(!dropdownOpen)}>
             <FaUserCircle className="w-6 h-6 mt-1 cursor-pointer" />
           </button>
 

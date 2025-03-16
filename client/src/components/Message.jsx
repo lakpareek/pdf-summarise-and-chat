@@ -4,16 +4,17 @@ import { CurrentConversationContext } from "../context/CurrentConversationContex
 import axios from 'axios';
 import { socket } from "../socket";
 
-export default function Message() {
+export default function Message({conversationId}) {
   const api_url = import.meta.env.VITE_API_URL;
-  const { currentConversation } = useContext(CurrentConversationContext);
+  //const { currentConversation } = useContext(CurrentConversationContext);
   const [messages, setMessages] = useState([]);
 
   useEffect(() => {
     const fetchMessages = async () => {
       try {
+        //console.log(conversationId + " is the conversation id");
         const result = await axios.get(
-          `${api_url}/chat/${currentConversation.conversation_id}`, 
+          `${api_url}/chat/${conversationId}`, 
           { withCredentials: true }
         );
         setMessages(result.data.messages);
@@ -22,10 +23,10 @@ export default function Message() {
       }
     };
   
-    if (currentConversation?.conversation_id) {
+    if (conversationId) {
       fetchMessages();
-      socket.emit("joinConversation", currentConversation.conversation_id);
-      console.log("messages fetched");
+      socket.emit("joinConversation", conversationId);
+      //console.log("messages fetched");
     }
   
     const handleReceiveMessage = (message) => {
@@ -38,7 +39,7 @@ export default function Message() {
     return () => {
       socket.off("receiveMessage", handleReceiveMessage);
     };
-  }, [currentConversation]);
+  }, [conversationId]);
   
 
 

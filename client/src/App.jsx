@@ -4,6 +4,7 @@ import { AuthContext } from './context/AuthContext';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
+import Chat from './components/Chat';
 import { socket } from './socket';
 
 function App() {
@@ -50,6 +51,7 @@ function App() {
     <div>
       <Routes>
         <Route path='/' element={user ? <Home /> : <Navigate to={"/login"} />} />
+        <Route path='/chat/:conversationId' element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
       </Routes>
