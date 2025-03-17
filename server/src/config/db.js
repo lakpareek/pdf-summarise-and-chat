@@ -10,12 +10,18 @@ dotenv.config({ path: join(__dirname, '../../.env') });
 
 const { Pool } = pkg;
 
+// const pool = new Pool({
+//   user: process.env.DB_USER || "postgres",
+//   host: process.env.DB_HOST || "localhost",
+//   database: process.env.DB_NAME || "pdfApplication",
+//   password: process.env.DB_PASSWORD || "asdfghjkl",
+//   port: Number(process.env.DB_PORT) || 5432,
+// });
 const pool = new Pool({
-  user: process.env.DB_USER || "postgres",
-  host: process.env.DB_HOST || "localhost",
-  database: process.env.DB_NAME || "pdfApplication",
-  password: process.env.DB_PASSWORD || "asdfghjkl",
-  port: Number(process.env.DB_PORT) || 5432,
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false, // For Neon DB SSL
+  },
 });
 
 const createUsersTable = async () => {
