@@ -7,7 +7,7 @@ const generateToken = (userId, res) => {
         maxAge: 15 * 24 * 60 * 60 * 1000, // MS,
         httpOnly: true, // prevent XSS cross site scripting
         sameSite: "none", 
-        secure: true, // HTTPS
+        secure: process.env.NODE_ENV !== "development",
     });
     return token;
 };

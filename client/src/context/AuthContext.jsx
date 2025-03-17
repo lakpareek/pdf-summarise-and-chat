@@ -9,7 +9,7 @@ export const AuthProvider = ({ children }) => {
 
   const checkAuthStatus = async () => {
     try {
-      const response = await axiosInstance.get('/auth/me');
+      const response = await axiosInstance.get('/auth/me', { withCredentials: true });
       setUser(response.data);
     } catch (error) {
       setUser(null); 
