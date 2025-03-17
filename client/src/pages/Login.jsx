@@ -4,6 +4,7 @@ import { Link, Navigate, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useState, useContext } from 'react';
 import { AuthContext } from '../context/AuthContext';
+import { axiosInstance } from '../axios';
 
 export default function Login() {
   const api_url = import.meta.env.VITE_API_URL;
@@ -19,7 +20,7 @@ export default function Login() {
       return;
     }
     try {
-      const response  = await axios.post(`${api_url}/auth/login`, {email, password}, { withCredentials: true });
+      const response  = await axiosInstance.post('/auth/login', {email, password});
       setUser(response.data.user);
       navigate('/')
     } catch (error) {

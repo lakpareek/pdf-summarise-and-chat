@@ -3,7 +3,7 @@ import { SidebarToggleContext } from '../context/SidebarToggleContext';
 import { CurrentConversationContext } from '../context/CurrentConversationContext';
 import { FaFileCirclePlus } from "react-icons/fa6";
 import { IoSend } from "react-icons/io5";
-import axios from 'axios';
+import { axiosInstance } from '../axios';
 import FileUploader from './FileUploader';
 
 
@@ -26,9 +26,10 @@ export default function QueryBox() {
     const toSend = message;
     setMessage("");
     try {
-      const result = await axios.post(`${api_url}/chat/send/${currentConversation.conversation_id}`, {
+      const result = await axiosInstance.post(`/chat/send/${currentConversation.conversation_id}`, {
         message: toSend,
-      }, { withCredentials: true });
+      });
+      
       
       //("Message Sent:", toSend);
     } catch(error) {

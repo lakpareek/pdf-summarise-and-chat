@@ -1,7 +1,7 @@
 import React from "react";
 import { useState, useContext, useEffect } from "react";
 import { CurrentConversationContext } from "../context/CurrentConversationContext";
-import axios from 'axios';
+import { axiosInstance } from "../axios";
 import { socket } from "../socket";
 import useScrollBottom from "../hooks/useScrollBottom";
 
@@ -15,10 +15,7 @@ export default function Message({conversationId}) {
     const fetchMessages = async () => {
       try {
         //console.log(conversationId + " is the conversation id");
-        const result = await axios.get(
-          `${api_url}/chat/${conversationId}`, 
-          { withCredentials: true }
-        );
+        const result = await axiosInstance.get(`/chat/${conversationId}`);
         setMessages(result.data.messages);
       } catch (error) {
         console.error("Error fetching messages:", error);

@@ -2,7 +2,7 @@ import React, { useEffect, useState, useContext } from "react";
 import { SidebarToggleContext } from "../context/SidebarToggleContext";
 import { CurrentConversationContext } from "../context/CurrentConversationContext";
 import MenuToggleBar from "./MenuToggleBar";
-import axios from "axios";
+import { axiosInstance } from "../axios";
 import { useNavigate } from "react-router-dom";
 
 export default function Sidebar() {
@@ -15,9 +15,7 @@ export default function Sidebar() {
   useEffect(() => {
     const getConversations = async () => {
       try {
-        const result = await axios.get(`${api_url}/chat/conversations`, {
-          withCredentials: true,
-        });
+        const result = await axiosInstance.get('/chat/conversations');
         setConversations(result.data.conversations);
         //console.log("Conversations fetched from sidebar:", result.data.conversations);
       } catch (error) {

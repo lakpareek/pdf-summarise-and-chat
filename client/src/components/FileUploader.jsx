@@ -4,7 +4,7 @@ import { TbFileUpload } from "react-icons/tb";
 import { FaSpinner } from "react-icons/fa";
 import { CurrentConversationContext } from '../context/CurrentConversationContext';
 import { useNavigate } from 'react-router-dom';
-import axios from "axios";
+import { axiosInstance } from "../axios";
 
 // Define constants outside component to avoid recreating on each render
 const UploadStatus = {
@@ -54,20 +54,17 @@ export default function FileUploader() {
     
     try{
         //console.log("Sending request to server");
-        const result = await axios.post(`${api_url}/pdf/uploadpdf`, formData, {
-            headers: {
-                'Content-Type': 'multipart/form-data',
-            },
-            withCredentials: true
-        });
+        const result = await axiosInstance.post('/pdf/uploadpdf', formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          }
+        });        
         
         //console.log("Upload successful, setting status to SUCCESS");
         setStatus(UploadStatus.SUCCESS);
         
         try{
-            const conversation = await axios.get(`${api_url}/chat/conversations`, {
-                withCredentials: true
-            });
+          const conversation = await axiosInstance.get('/chat/conversations');
             //console.log("Conversations fetched from fileuploader:", conversation.data.conversations);
             setCurrentConversation(conversation.data.conversations[0]);
             const a = conversation.data.conversations[0].conversation_id;

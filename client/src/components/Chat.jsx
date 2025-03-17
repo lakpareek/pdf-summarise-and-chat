@@ -4,8 +4,7 @@ import { useParams, useNavigate } from "react-router-dom";
 
 import { SidebarToggleContext } from '../context/SidebarToggleContext'
 import { CurrentConversationContext } from "../context/CurrentConversationContext";
-import axios from 'axios';
-
+import { axiosInstance } from '../axios';
 
 
 export default function Chat({conversationId}) {
@@ -28,9 +27,7 @@ export default function Chat({conversationId}) {
   }, [conversationId, setCurrentConversation]);
   const getConvoName = async () => {
     try {
-      const response = await axios.get(`${api_url}/chat/conversations`, 
-      {withCredentials: true}
-      );
+      const response = await axiosInstance.get('/chat/conversations');
       const convos = response.data.conversations;
       //console.log("the function is running");
       
