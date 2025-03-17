@@ -25,11 +25,7 @@ PORT=3001
 CLOUDINARY_CLOUD_NAME=...
 CLOUDINARY_API_KEY=...
 CLOUDINARY_API_SECRET=...
-DB_HOST=localhost
-DB_USER=postgres
-DB_PASSWORD=...
-DB_NAME=pdfApplication
-DB_PORT=5432
+DATABASE_URL=...
 JWT_SECRET=...
 GEMINI_API_KEY=...
 ```
@@ -37,6 +33,7 @@ GEMINI_API_KEY=...
 ### Frontend `.env` file (Located in the `client` folder):
 ```env
 VITE_API_URL=http://localhost:3001/api
+VITE_SERVER_URL=http://localhost:3001
 ```
 
 ## 🚀 Features
@@ -77,7 +74,7 @@ npm run dev
 
 
 ## 🌐 Live Demo
-Coming soon...
+[Live Link](https://pdf-summarise-and-chat-client.onrender.com/login)
 
 ## ✅ Future Enhancements
 - OAuth integration
