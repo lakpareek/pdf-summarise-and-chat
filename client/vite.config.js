@@ -6,6 +6,10 @@ import path from 'path' // Import the path module
 export default defineConfig({
   plugins: [react()],
   server: {
+    host: true,
+    port: 3000,
+  },
+  preview: {
     port: 3000,
   },
   resolve: { // Ensure resolve is used for alias
