@@ -16,7 +16,8 @@ app.use(cookieParser());
 app.use(cors({
   origin: ["https://pdf-summarise-and-chat.vercel.app",
   "https://pdf-summarise-and-chat-10xvd3szj-lakpareeks-projects.vercel.app",
-  "https://pdf-summarise-and-chat-git-main-lakpareeks-projects.vercel.app"
+  "https://pdf-summarise-and-chat-git-main-lakpareeks-projects.vercel.app",
+  "http://localhost:3000"
  ],
   methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true,
