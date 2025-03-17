@@ -14,7 +14,9 @@ const PORT = process.env.PORT || 3001;
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors({
-  origin: "https://pdf-summarise-and-chat.vercel.app",
+  origin: ["https://pdf-summarise-and-chat.vercel.app",
+  "https://pdf-summarise-and-chat-10xvd3szj-lakpareeks-projects.vercel.app"
+ ],
   methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true,
 }));
