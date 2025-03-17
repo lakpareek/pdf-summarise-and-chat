@@ -6,7 +6,10 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {
 	cors: {
-		origin: [true],
+		origin: [
+      "https://pdf-summarise-and-chat-client.onrender.com", 
+      "http://localhost:3000"
+    ],
 		methods: ["GET", "POST"],
 		credentials: true,
 	},
