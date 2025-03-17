@@ -9,11 +9,11 @@ import Chat from "../components/Chat";
 const Home = () => {
   const { conversationId } = useParams();
   const navigate = useNavigate();
-  // useEffect(() => {
-  //   if (!conversationId) {
-  //     navigate("/");
-  //   }
-  // }, [conversationId, navigate]);
+  useEffect(() => {
+    if (!conversationId) {
+      navigate("/");
+    }
+  }, [conversationId, navigate]);
 
   return (
     <div>

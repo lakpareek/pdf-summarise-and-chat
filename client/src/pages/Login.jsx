@@ -36,7 +36,7 @@ export default function Login() {
           <input type="password" name="password" placeholder="Password" className='p-[1vw] bg-[#404040] text-white rounded-md border-none mb-[1vw]' />
           <button type="submit" className='p-[1vw] bg-[#404040] text-white rounded-md border-none mb-[1vw]'>Login</button>
         </form>
-        <button type="submit" className='p-[1vw] bg-[#404040] text-white rounded-md border-none mb-[1vw w-[80%] flex justify-center items-center gap-2'><FcGoogle />Log-in with Google</button>
+        <button onClick={()=>{alert("OAuth 2.0 is still under developement. Try manual login")}} type="submit" className='p-[1vw] bg-[#404040] text-white rounded-md border-none mb-[1vw w-[80%] flex justify-center items-center gap-2'><FcGoogle />Log-in with Google</button>
         {error && <p className='text-red-400 text-sm pt-2'>{error}</p>}
       </div>
       <p>New User? <Link to='/signup' className='text-blue-500'>Sign-up</Link></p>

@@ -40,7 +40,7 @@ export default function Signup() {
               <input type="password" name="password" placeholder="Password" className='p-[1vw] bg-[#404040] text-white rounded-md border-none mb-[1vw]' />
               <button type="submit" className='p-[1vw] bg-[#404040] text-white rounded-md border-none mb-[1vw]'>Sign-up</button>
             </form>
-            <button type="submit" className='p-[1vw] bg-[#404040] text-white rounded-md border-none mb-[1vw w-[80%] flex justify-center items-center gap-2'><FcGoogle />Sign-up with Google</button>
+            <button onClick={()=>{alert("OAuth 2.0 is still under developement. Try manual signup")}} type="submit" className='p-[1vw] bg-[#404040] text-white rounded-md border-none mb-[1vw w-[80%] flex justify-center items-center gap-2'><FcGoogle />Sign-up with Google</button>
             {error && <p className='text-red-400 text-sm pt-2'>{error}</p>}
           </div>
           <p>Already a User? <Link to='/login' className='text-blue-500'>Login</Link></p>
