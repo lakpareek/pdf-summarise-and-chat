@@ -29,7 +29,11 @@ export const generateChatResponse = async (pdfText, conversationContext) => {
         ${pdfText}
         -------------------
 
-        Now, answer the user's questions based on this content.`;
+        Now, answer the user's questions based on this content.
+
+        - If the PDF is entirely images and some images are crucial for understanding the document, inform the user immediately.
+        - Only respond to questions directly related to the PDF's content.
+        - If the user's question is unrelated to the PDF, inform them that their question is not related to the document.`;
 
         const result = await model.generateContent({
             contents: [
